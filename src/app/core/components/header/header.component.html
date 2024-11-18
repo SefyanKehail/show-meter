@@ -1,0 +1,17 @@
+<header class="bg-main sticky top-0 shadow-md shadow-customLightGold">
+  <div class="flex justify-between">
+    <div class="flex p-2">
+      <img width="150" src="../../../../assets/images/logo.png" alt="logo" class="mx-3">
+      <ul *ngFor="let item of navList" class="flex items-center justify-around">
+        <li class="px-5 text-xl text-customWhite cursor-pointer hover:text-customLightGold transition-[2s] h-full flex items-center">{{item}}</li>
+      </ul>
+    </div>
+    <div class="flex items-center p-5 gap-4">
+      <div *ngIf="userProfileDto?.pictureUrl">
+        <img src="{{userProfileDto?.pictureUrl}}" alt="profile-picture" width="45" class="rounded-full" referrerPolicy="no-referrer">
+      </div>
+      <p class="text-1xl text-customWhite">{{userProfileDto?.name}}</p>
+    </div>
+  </div>
+
+</header>

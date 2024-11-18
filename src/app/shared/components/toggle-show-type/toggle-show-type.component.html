@@ -1,0 +1,13 @@
+<main class="grid place-items-center">
+  <div [formGroup]="radioForm" class="grid w-[15rem] grid-cols-2 border-customExtraLightGold border-2 rounded-xl">
+    <div>
+      <input type="radio" formControlName="showType" [id]="carouselTitle+'Movie'" value="movie" class="peer hidden" />
+      <label [for]="carouselTitle+'Movie'" class="block cursor-pointer select-none rounded-l p-2 text-center peer-checked:bg-customExtraLightGold peer-checked:font-bold peer-checked:text-customBlack">Movies</label>
+    </div>
+
+    <div>
+      <input type="radio" formControlName="showType" [id]="carouselTitle+'TV'" value="tv" class="peer hidden" />
+      <label [for]="carouselTitle+'TV'" class="block cursor-pointer select-none rounded-r p-2 text-center peer-checked:bg-customExtraLightGold peer-checked:font-bold peer-checked:text-customBlack">TV-Series</label>
+    </div>
+  </div>
+</main>

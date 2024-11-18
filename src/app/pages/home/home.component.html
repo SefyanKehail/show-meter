@@ -1,0 +1,22 @@
+<app-header [userProfileDto]="userProfileDto"></app-header>
+<!-- component -->
+<div class="bg-customBlack h-fit w-full">
+  <app-show-slider [trendingShows]="trendingShows"></app-show-slider>
+  <app-show-carousel [carouselTitle]="CarouselTitleEnum.Recommended"
+                     [showList]="recommended" (showTypeEventEmitter)="receiveShowTypeForRecommended($event)">
+  </app-show-carousel>
+  <app-show-carousel [carouselTitle]="CarouselTitleEnum.Latest"
+                     [showList]="latest" (showTypeEventEmitter)="receiveShowTypeForLatest($event)">
+  </app-show-carousel>
+  <app-show-carousel [carouselTitle]="CarouselTitleEnum.UpcomingMovies"
+                     [showList]="upcomingMovies">
+  </app-show-carousel>
+  <app-show-carousel [carouselTitle]="CarouselTitleEnum.TopRatedMovies"
+                     [showList]="topRatedMovies">
+  </app-show-carousel>
+  <app-show-carousel [carouselTitle]="CarouselTitleEnum.TopRatedTVSeries"
+                     [showList]="topRatedTVSeries">
+  </app-show-carousel>
+</div>
+
+<app-footer></app-footer>

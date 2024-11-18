@@ -1,0 +1,67 @@
+<div class="flex flex-row w-full h-screen">
+  <div class="w-8/12 h-fit shadow-customLightGold">
+    <swiper-container #swiperContainer init="false" thumbs-swiper=".thumbsSwiper">
+      <!-- ngFor limited  ;-->
+      <!-- custom container with video iframe maybe  ;-->
+      <swiper-slide *ngFor="let show of trendingShows; trackBy: trackByShow">
+        <div class="slide-content">
+          <div
+            class="slide-info group px-8 mt-[32%] absolute bg-customBlack bg-opacity-70 mx-2 hover:mt-[30%] transition-[2s]">
+            <h1 class="text-3xl py-2">{{ show.title ? show.title : show.name }}</h1>
+            <p
+              class="inline-block w-3/4 flex-wrap overflow-auto p-1 h-16 group-hover:h-24 transition-[2s]">{{ show.overview }}</p>
+            <div class="mb-3">
+              <a (click)="openVideoModal(environment.api.tmdb.youtubeEmbedUrl(show.trailer_key))"
+                class="bg-customWhite text-customBlack py-4 px-8 mr-3 hover:bg-customLightBlack hover:text-customWhite hover:opacity-70 transition-[2s]">
+                &#9658; Watch Trailer
+              </a>
+              <button
+                class="bg-customLightBlack text-customWhite opacity-70 py-4 px-12 hover:opacity-100 transition-[2s]">
+                More Info
+              </button>
+            </div>
+          </div>
+          <img src="{{imageBaseUrl+show.backdrop_path}}" alt="" class="w-full">
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="thumbs-swiper overflow-hidden">
+    <swiper-container #swiperThumbsContainer class="thumbsSwiper">
+      <swiper-slide *ngFor="let show of trendingShows;  trackBy: trackByShow">
+        <div class="thumbs-content w-full flex">
+          <img src="{{imageBaseUrl+show.poster_path}}" alt="" width="114">
+          <div class="image-info p-2 grid gap-1 grid-cols-1">
+            <h1 class="text-lg cursor-pointer hover:underline">{{ show.title ? show.title : show.name }}</h1>
+            <small class="text-customLightGold">{{ show.media_type === "movie" ? "Movie" : "TV Series" }}</small>
+            <div class="basic-info flex gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                   class="w-6 h-6 fill-customLightGold">
+                <path fill-rule="evenodd"
+                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                      clip-rule="evenodd"/>
+              </svg>
+              {{ show.vote_average | number:'1.1-1' }} &nbsp; &#8226; &nbsp;
+              <p *ngIf="show.media_type === 'movie'">{{ show.release_date| date:'Y' }} &nbsp; &#8226; &nbsp; {{ show.runtime }} Min</p>
+              <p *ngIf="show.media_type === 'tv'"> S{{ show.season }} &nbsp; &#8226; &nbsp; EP{{ show.episode }}</p>
+
+            </div>
+            <div class="genres">
+              <small class="text-customLightGold inline" *ngFor="let genre of show.genres">{{genre}} &nbsp; </small>
+            </div>
+            <div class="buttons">
+              <a  (click)="openVideoModal(environment.api.tmdb.youtubeEmbedUrl(show.trailer_key))" class="cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-customWhite inline">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
+                </svg>
+                <small class="italic inline">Watch trailer</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</div>

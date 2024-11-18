@@ -1,0 +1,56 @@
+<div class="carousel-container mb-20">
+  <div class="flex items-center">
+    <h1 class="px-10 text-3xl py-2 text-customExtraLightGold  ">{{ carouselTitle }}</h1>
+    <div class="toggle-show-type">
+      <app-toggle-show-type
+        *ngIf="carouselTitle === CarouselTitleEnum.Recommended || carouselTitle === CarouselTitleEnum.Latest"
+        [carouselTitle]="carouselTitle"
+        (showTypeEventEmitter)="receiveShowTypeAndReEmit($event)"></app-toggle-show-type>
+    </div>
+  </div>
+  <!-- spinner  -->
+    <div class="w-full flex justify-center items-center h-full" *ngIf="loading$ | async">
+      <app-spinner></app-spinner>
+    </div>
+  <swiper-container #swiperContainer init="false" class="swiper-container">
+    <swiper-slide *ngFor="let show of showList; trackBy: trackByShow">
+      <div class="thumbs-content w-full flex-column">
+        <img src="{{imageBaseUrl+show.poster_path}}" alt="" loading="lazy">
+        <div class="basic-info p-2 grid gap-1 grid-cols-1">
+          <div class="flex justify-center items-center text-center"
+               *ngIf="carouselTitle !== CarouselTitleEnum.UpcomingMovies">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                 class="w-6 h-6 fill-customLightGold">
+              <path fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd"/>
+            </svg>
+            &nbsp;{{ show.vote_average | number:'1.1-1' }} &nbsp; &#8226; &nbsp;
+            <p *ngIf="show.media_type === 'movie'">{{ show.release_date| date:'Y' }} &nbsp; &#8226;
+              &nbsp; {{ show.runtime }} Min</p>
+            <p *ngIf="show.media_type === 'tv'"> S{{ show.season }} &nbsp; &#8226; &nbsp; EP{{ show.episode }}</p>
+          </div>
+          <div *ngIf="carouselTitle === CarouselTitleEnum.UpcomingMovies" class="text-center">
+            <p class="text-customExtraLightGold italic">{{ show.release_date }}</p>
+          </div>
+          <a (click)="openVideoModal(environment.api.tmdb.youtubeEmbedUrl(show.trailer_key))"
+             class="cursor-pointer text-center hover:bg-customLightGold group transition-[2s]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-10 h-10 stroke-customWhite inline group-hover:stroke-customBlack">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"/>
+            </svg>
+            <small class="italic inline group-hover:text-customBlack group-hover:font-bold">Watch trailer</small>
+          </a>
+          <hr>
+          <h1
+            class="text-lg cursor-pointer hover:underline text-center text-customWhite">{{ (show.title ? show.title : show.name) | limitTitle }}</h1>
+        </div>
+      </div>
+    </swiper-slide>
+    <swiper-scrollbar></swiper-scrollbar>
+  </swiper-container>
+</div>
+
+
