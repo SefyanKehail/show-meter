@@ -5,5 +5,5 @@ https://developer.themoviedb.org/
 
 ## Overview of the app (Google OAuth)
 
-![Animation](https://github.com/user-attachments/assets/71ac04a5-653a-4018-81d8-119ac02deffb)
+![Animation](https://github.com/SefyanKehail/show-meter/blob/master/oauth.gif)
 
